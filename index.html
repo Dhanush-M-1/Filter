@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductCompare India - Smart Product Comparison</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__logo">
+                    <h1>ProductCompare India</h1>
+                </div>
+                <nav class="header__nav">
+                    <button class="nav-btn nav-btn--active" data-section="home">Home</button>
+                    <button class="nav-btn" data-section="compare">Compare</button>
+                    <button class="nav-btn" data-section="saved">Saved</button>
+                </nav>
+                <div class="header__profile">
+                    <div class="profile-status">
+                        <span class="status-indicator"></span>
+                        <span>Guest User</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Home Section -->
+            <section id="home-section" class="section section--active">
+                <!-- Product Input Section -->
+                <div class="input-section">
+                    <div class="input-section__header">
+                        <h2>Find & Compare Products Across Platforms</h2>
+                        <p>Compare prices and features from Amazon, Flipkart, Myntra, and Meesho</p>
+                    </div>
+                    
+                    <div class="input-methods">
+                        <div class="input-method">
+                            <label class="form-label">Product URL</label>
+                            <div class="url-input-group">
+                                <input 
+                                    type="text" 
+                                    class="form-control url-input" 
+                                    placeholder="Paste product URL from Amazon, Flipkart, Myntra, or Meesho"
+                                    id="productUrl"
+                                >
+                                <button class="btn btn--primary search-btn" id="searchBtn">
+                                    <span class="search-btn__text">Search</span>
+                                    <span class="search-btn__loading hidden">Searching...</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-divider">
+                            <span>OR</span>
+                        </div>
+                        
+                        <div class="input-method">
+                            <label class="form-label">Upload Product Image</label>
+                            <div class="image-upload" id="imageUpload">
+                                <div class="image-upload__content">
+                                    <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7,10 12,15 17,10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    <p class="upload-text">Drag and drop product image here</p>
+                                    <button class="btn btn--outline upload-btn">Upload Product Image</button>
+                                </div>
+                                <input type="file" class="file-input hidden" id="fileInput" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection">
+                    <!-- Controls -->
+                    <div class="results-controls">
+                        <div class="controls-left">
+                            <button class="btn btn--outline filter-toggle" id="filterToggle">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"></polygon>
+                                </svg>
+                                Filters
+                            </button>
+                            <div class="results-count" id="resultsCount">8 products found</div>
+                        </div>
+                        
+                        <div class="controls-right">
+                            <div class="view-toggle">
+                                <button class="view-btn view-btn--active" data-view="cards">Cards</button>
+                                <button class="view-btn" data-view="table">Table</button>
+                                <button class="view-btn" data-view="dashboard">Dashboard</button>
+                            </div>
+                            
+                            <select class="form-control sort-select" id="sortSelect">
+                                <option value="bestMatch">Best Match</option>
+                                <option value="priceLowHigh">Price: Low to High</option>
+                                <option value="priceHighLow">Price: High to Low</option>
+                                <option value="ratingHighLow">Rating: High to Low</option>
+                                <option value="deliveryFastest">Delivery: Fastest First</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Filter Panel -->
+                    <div class="filter-panel" id="filterPanel">
+                        <div class="filter-panel__header">
+                            <h3>Filters</h3>
+                            <button class="btn btn--outline btn--sm clear-filters" id="clearFilters">Clear All</button>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Price Range</h4>
+                            <div class="price-range">
+                                <input type="range" class="range-slider" id="minPrice" min="0" max="150000" value="0">
+                                <input type="range" class="range-slider" id="maxPrice" min="0" max="150000" value="150000">
+                                <div class="price-display">
+                                    <span id="minPriceDisplay">₹0</span> - <span id="maxPriceDisplay">₹1,50,000</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Minimum Rating</h4>
+                            <div class="rating-filters">
+                                <label class="checkbox-label">
+                                    <input type="radio" name="rating" value="4.5">
+                                    <span class="rating-stars">★★★★★ 4.5 & above</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="radio" name="rating" value="4.0">
+                                    <span class="rating-stars">★★★★☆ 4.0 & above</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="radio" name="rating" value="3.5">
+                                    <span class="rating-stars">★★★☆☆ 3.5 & above</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="radio" name="rating" value="3.0">
+                                    <span class="rating-stars">★★★☆☆ 3.0 & above</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Platform</h4>
+                            <div class="platform-filters">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="platform" value="Amazon" checked>
+                                    <span class="platform-badge platform-badge--amazon">Amazon</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="platform" value="Flipkart" checked>
+                                    <span class="platform-badge platform-badge--flipkart">Flipkart</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="platform" value="Myntra" checked>
+                                    <span class="platform-badge platform-badge--myntra">Myntra</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="platform" value="Meesho" checked>
+                                    <span class="platform-badge platform-badge--meesho">Meesho</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Delivery Time</h4>
+                            <div class="delivery-filters">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="delivery" value="Same day">
+                                    Same day delivery
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="delivery" value="1-2 days">
+                                    1-2 days
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="delivery" value="2-3 days">
+                                    2-3 days
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="delivery" value="3-5 days">
+                                    3-5 days
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Availability</h4>
+                            <div class="availability-filters">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="availability" value="In Stock" checked>
+                                    In Stock
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="availability" value="Limited Stock">
+                                    Limited Stock
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="availability" value="Out of Stock">
+                                    Out of Stock
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn--primary btn--full-width apply-filters" id="applyFilters">Apply Filters</button>
+                    </div>
+
+                    <!-- Results Display -->
+                    <div class="results-display">
+                        <!-- Loading State -->
+                        <div class="loading-state hidden" id="loadingState">
+                            <div class="skeleton-cards">
+                                <div class="skeleton-card"></div>
+                                <div class="skeleton-card"></div>
+                                <div class="skeleton-card"></div>
+                                <div class="skeleton-card"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cards View -->
+                        <div class="products-grid" id="productsGrid">
+                            <!-- Products will be dynamically inserted here -->
+                        </div>
+
+                        <!-- Table View -->
+                        <div class="products-table-container hidden" id="productsTable">
+                            <table class="products-table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Platform</th>
+                                        <th>Price</th>
+                                        <th>Rating</th>
+                                        <th>Delivery</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productsTableBody">
+                                    <!-- Table rows will be dynamically inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Dashboard View -->
+                        <div class="dashboard-view hidden" id="dashboardView">
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <h3>Lowest Price</h3>
+                                    <div class="stat-value" id="lowestPrice">₹2,999</div>
+                                    <div class="stat-label">Levi's Jeans on Myntra</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Highest Rated</h3>
+                                    <div class="stat-value" id="highestRated">4.6★</div>
+                                    <div class="stat-label">MacBook Air M2</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Best Value</h3>
+                                    <div class="stat-value" id="bestValue">70% OFF</div>
+                                    <div class="stat-label">Adidas Ultraboost</div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>Fastest Delivery</h3>
+                                    <div class="stat-value" id="fastestDelivery">Same Day</div>
+                                    <div class="stat-label">Samsung Galaxy S24</div>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-charts">
+                                <div class="chart-container">
+                                    <h3>Price Distribution by Platform</h3>
+                                    <div style="position: relative; height: 300px;">
+                                        <canvas id="priceChart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <h3>Rating Distribution</h3>
+                                    <div style="position: relative; height: 300px;">
+                                        <canvas id="ratingChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Saved Section -->
+            <section id="saved-section" class="section">
+                <div class="saved-header">
+                    <h2>Saved Comparisons</h2>
+                    <p>Your previously saved product comparisons</p>
+                </div>
+                <div class="saved-comparisons" id="savedComparisons">
+                    <div class="empty-state">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <h3>No saved comparisons yet</h3>
+                        <p>Save interesting product comparisons to access them later</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Tooltip -->
+    <div class="tooltip hidden" id="tooltip">
+        <div class="tooltip-content"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
